@@ -23,8 +23,8 @@ wlan = network.WLAN(network.STA_IF)
 wlan.active(True)
 wlan.connect(ssid, pw)
 
-# Initialize watchdog timer (timeout in milliseconds, e.g., 15000ms = 15 seconds) (maximum is 2^24 clock cycles which is about 16.8 seconds)
-wdt = WDT(timeout=15000)
+# Initialize watchdog timer (timeout in milliseconds, e.g., 8000ms = 8 seconds) (Maximum of 0x7fffff, which is approximately 8.3 seconds)
+wdt = WDT(timeout=8000)
 
 while True:
     try:
