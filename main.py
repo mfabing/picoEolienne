@@ -24,12 +24,12 @@ wlan.active(True)
 wlan.connect(ssid, pw)
 
 # Initialize watchdog timer (timeout in milliseconds, e.g., 8000ms = 8 seconds) (Maximum of 0x7fffff, which is approximately 8.3 seconds)
-wdt = WDT(timeout=8000)
+# wdt = WDT(timeout=8000) # for debugging purposes
 
 while True:
     try:
 	# Feed the watchdog to prevent system reset
-        wdt.feed()
+        # wdt.feed()
 	    
         if wlan.isconnected():
         	adc1_value = adc1.read_u16()
