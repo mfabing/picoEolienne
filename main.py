@@ -1,4 +1,4 @@
-from machine import ADC, Pin
+from machine import ADC, Pin, WDT
 from time import sleep
 import time
 import network
