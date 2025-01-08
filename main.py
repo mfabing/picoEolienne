@@ -38,7 +38,7 @@ while True:
 
 		# Send data via HTTP GET
 		url = f"https://jacqueline-michel.com/drapeau/?adc_anemometre={adc1_value}&adc_batteries={adc3_value}"
-		response = requests.get(url)
+		response = requests.get(url,timeout=5) # timeout of 5 seconds maximum
 
 		# Check HTTP response (to uncomment for debugging purpose)
 		# if response.status_code == 200:
