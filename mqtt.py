@@ -16,6 +16,10 @@ mqtt_publish_topic = ""  # The MQTT topic for your Adafruit IO Feed
 # Enter a random ID for this MQTT Client  It needs to be globally unique across all of Adafruit IO.
 mqtt_client_id = "picoDanielStAmatTallande"
 
+# MQTT topics for the two feeds
+mqtt_publish_topic_27 = "your-username/feeds/sensor-27"  # Replace with your feed name for sensor 27
+mqtt_publish_topic_29 = "your-username/feeds/sensor-29"  # Replace with your feed name for sensor 29
+
 # Connect to WiFi
 wlan = network.WLAN(network.STA_IF)
 wlan.active(True)
