@@ -43,6 +43,9 @@ adc1 = ADC(Pin(26)) # pin GPIO de l'anémomètre => V1
 adc2 = ADC(Pin(27)) # pin GPIO du moteur de l'armoire qui alimente les plaquettes électronique = vitesse du rotor => V2
 adc3 = ADC(Pin(28)) # pin GPIO des batteries 24V DC => V3
 
+# Initialize the built-in LED
+led = Pin(25, Pin.OUT)
+
 # Publish a data point to the Adafruit IO MQTT server every 3 seconds
 try:
     while True:
@@ -50,7 +53,9 @@ try:
         value_adc1 = adc1.read_u16()
         value_adc3 = adc3.read_u16()
 
-        # Publish the data to the topic!
+        # Turn on the LED
+        led.on()
+        
         # Publish the data to the respective topics!
         print(f'Publish 27: {value_adc1}')
         mqtt_client.publish(mqtt_publish_topic_27, str(value_adc1))
@@ -58,9 +63,13 @@ try:
         print(f'Publish 29: {value_adc3}')
         mqtt_client.publish(mqtt_publish_topic_29, str(value_adc3))
 
+        # Turn off the LED
+        led.off()
+
         # Delay a bit to avoid hitting the rate limit (in theory this could be 2 seconds, but 3 is safer)
         time.sleep(3)
 except Exception as e:
     print(f'Failed to publish message: {e}')
 finally:
     mqtt_client.disconnect()
+    led.off()  # Ensure the LED is turned off in case of an error
