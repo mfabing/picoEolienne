@@ -47,8 +47,12 @@ try:
         value_adc3 = adc3.read_u16()
 
         # Publish the data to the topic!
-        print(f'Publish adc1: {value_adc1}, adc3: {value_adc3}')
-        mqtt_client.publish(mqtt_publish_topic, f'adc1: {value_adc1}, adc3: {value_adc3}')
+        # Publish the data to the respective topics!
+        print(f'Publish 27: {value_adc1}')
+        mqtt_client.publish(mqtt_publish_topic_27, str(value_adc1))
+
+        print(f'Publish 29: {value_adc3}')
+        mqtt_client.publish(mqtt_publish_topic_29, str(value_adc3))
 
         # Delay a bit to avoid hitting the rate limit (in theory this could be 2 seconds, but 3 is safer)
         time.sleep(3)
