@@ -2,7 +2,7 @@ import network
 import time
 from math import sin
 from umqtt.simple import MQTTClient
-from machine import ADC, Pin
+from machine import ADC, Pin, WDT
 
 # Fill in your WiFi network name (ssid) and password here:
 wifi_ssid = ""
@@ -46,9 +46,25 @@ adc3 = ADC(Pin(28)) # pin GPIO des batteries 24V DC => V3
 # Initialize the built-in LED
 led = Pin(25, Pin.OUT)
 
+# Initialize the watchdog timer
+wdt = WDT(timeout=8300)  # Set the watchdog timeout to 8.3 seconds
+
 # Publish a data point to the Adafruit IO MQTT server every 3 seconds
 try:
     while True:
+        # Check WiFi connection
+        if not wlan.isconnected():
+            print("WiFi disconnected. Reconnecting...")
+            wlan.connect(wifi_ssid, wifi_password)
+            while not wlan.isconnected():
+                print('Waiting for connection...')
+                time.sleep(1)
+            print("Reconnected to WiFi")
+            mqtt_client.connect()  # Reconnect to MQTT server
+
+        # Feed the watchdog
+        wdt.feed()
+        
         # Read the analog values from pins 27 and 29
         value_adc1 = adc1.read_u16()
         value_adc3 = adc3.read_u16()
